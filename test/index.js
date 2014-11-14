@@ -28,7 +28,7 @@ module.exports = function (t, a) {
 	a(result.childNodes[1].data, 'fura');
 	a(result.childNodes[2].data, ' zagalo');
 
-	a.h1("Mixed with varabiles");
+	a.h1("Mixed with variables");
 	result = md(_('marko __marek ${ miszel } zegarek__ zagalo ${ fuszka }', {
 		miszel: 'fura',
 		fuszka: {
@@ -51,4 +51,52 @@ module.exports = function (t, a) {
 	a(result.childNodes[3].nodeName, 'P');
 	a(result.childNodes[3].childNodes.length, 1);
 	a(result.childNodes[3].childNodes[0].data, 'razdwa');
+
+	a.h2("Inline");
+	result = md(_('marko __marek ${ miszel } zegarek__ zagalo ${ fuszka }', {
+		miszel: 'fura',
+		fuszka: {
+			toDOM: function (document) {
+				var el = document.createElement('p');
+				el.innerHTML = 'razdwa';
+				return el;
+			}
+		}
+	}), { inline: true });
+	a(result.nodeName, '#document-fragment');
+	a(result.childNodes.length, 4);
+	a(result.childNodes[0].data, 'marko ');
+	a(result.childNodes[1].nodeName, 'STRONG');
+	a(result.childNodes[1].childNodes.length, 3);
+	a(result.childNodes[1].childNodes[0].data, 'marek ');
+	a(result.childNodes[1].childNodes[1].data, 'fura');
+	a(result.childNodes[1].childNodes[2].data, ' zegarek');
+	a(result.childNodes[2].data, ' zagalo ');
+	a(result.childNodes[3].nodeName, 'P');
+	a(result.childNodes[3].childNodes.length, 1);
+	a(result.childNodes[3].childNodes[0].data, 'razdwa');
+
+	result = md(_('# marko __marek ${ miszel } zegarek__ zagalo ${ fuszka }\n\n## filo', {
+		miszel: 'fura',
+		fuszka: {
+			toDOM: function (document) {
+				var el = document.createElement('p');
+				el.innerHTML = 'razdwa';
+				return el;
+			}
+		}
+	}), { inline: true });
+	a(result.nodeName, '#document-fragment');
+	a(result.childNodes.length, 4);
+	a(result.childNodes[0].data, 'marko ');
+	a(result.childNodes[1].nodeName, 'STRONG');
+	a(result.childNodes[1].childNodes.length, 3);
+	a(result.childNodes[1].childNodes[0].data, 'marek ');
+	a(result.childNodes[1].childNodes[1].data, 'fura');
+	a(result.childNodes[1].childNodes[2].data, ' zegarek');
+	a(result.childNodes[2].data, ' zagalo ');
+	a(result.childNodes[3].nodeName, 'P');
+	a(result.childNodes[3].childNodes.length, 1);
+	a(result.childNodes[3].childNodes[0].data, 'razdwa');
+
 };

@@ -1,16 +1,20 @@
 'use strict';
 
-var forEachRight       = require('es5-ext/array/#/for-each-right')
+var find               = require('es5-ext/array/#/find')
+  , forEachRight       = require('es5-ext/array/#/for-each-right')
   , isDocumentFragment = require('dom-ext/document-fragment/is-document-fragment')
   , isElement          = require('dom-ext/element/is-element')
   , isText             = require('dom-ext/text/is-text')
   , normalize          = require('dom-ext/document/#/normalize')
+  , isInlineElement    = require('dom-ext/html-element/is-inline-element')
   , validDocument      = require('dom-ext/html-document/valid-html-document')
   , htmlToDom          = require('dom-ext/html-document/#/html-to-dom')
   , Remarkable         = require('remarkable')
 
+  , isNotInlineElement = function (el) { return isElement(el) && !isInlineElement(el); }
   , insertsRe = /\x01(\d+)\x01/
   , justInsertRe = /^\x01(\d+)\x01$/
+
   , isArray = Array.isArray, forEach = Array.prototype.forEach;
 
 var mdToHtml = (function () {
@@ -34,6 +38,21 @@ var resolveInserts = function (str, inserts, document) {
 	}
 	if (str.length) result.appendChild(document.createTextNode(str));
 	return result;
+};
+
+var resolveInlineBlock = function (dom, document) {
+	var blockEl = find.call(dom.childNodes, isNotInlineElement), df;
+	if (blockEl) return resolveInlineBlock(blockEl, document);
+	switch (dom.childNodes.length) {
+	case 0:
+		return null;
+	case 1:
+		return dom.childNodes[0];
+	}
+	if (isDocumentFragment(dom)) return dom;
+	df = document.createDocumentFragment();
+	while (dom.firstChild) df.appendChild(dom.firstChild);
+	return df;
 };
 
 var fixInserts = function (dom, inserts, document) {
@@ -68,8 +87,8 @@ var fixInserts = function (dom, inserts, document) {
 
 module.exports = function (document) {
 	validDocument(document);
-	return function (message) {
-		var insertsMap, insertIndex = -1, dom;
+	return function (message/*, options*/) {
+		var insertsMap, insertIndex = -1, dom, options = Object(arguments[1]);
 		if (isArray(message)) {
 			insertsMap = [];
 			message = message.reduce(function (a, b, index) {
@@ -79,6 +98,7 @@ module.exports = function (document) {
 			}, '');
 		}
 		dom = htmlToDom.call(document, mdToHtml(message));
+		if (options.inline) dom = resolveInlineBlock(dom, document);
 		if (!insertsMap) return dom;
 		return fixInserts(dom, insertsMap, document);
 	};

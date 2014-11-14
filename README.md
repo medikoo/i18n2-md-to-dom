@@ -23,6 +23,25 @@ dom = md2Dom(_("My name is __${ fullName }__.", {
 // dom reflects: <p>My name is <strong>John Smith</strong>.</p>
 ```
 
+#### Inline level output
+
+Additionally `inline` option is supported, it'll output DOM for first element that contains strictly inline content.
+
+It's helpful when we want to resolve texts for simple one line messages and be sure we won't end with block-level content
+
+```javascript
+var _ = require('i18n2')(locale);
+var md2dom = require(i18n2-md-to-dom);
+
+var dom = md2Dom(_("Some text with __important__ content."), { inline: true });
+// dom reflects document fragment that contains:
+// Some text with <strong>important</strong>content
+
+var dom = md2Dom(_("# Some heading\n## Other heading"), { inline: true });
+// dom reflects document fragment that contains:
+// Some heading
+```
+
 Behind the scenes it uses [Remarkable](https://github.com/jonschlinkert/remarkable#remarkable) markdown parser
 
 ### Tests [![Build Status](https://travis-ci.org/medikoo/i18n2-md-to-dom.svg)](https://travis-ci.org/medikoo/i18n2-md-to-dom)
