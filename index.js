@@ -7,18 +7,13 @@ var forEachRight       = require('es5-ext/array/#/for-each-right')
   , normalize          = require('dom-ext/document/#/normalize')
   , validDocument      = require('dom-ext/html-document/valid-html-document')
   , htmlToDom          = require('dom-ext/html-document/#/html-to-dom')
-  , Remarkable         = require('remarkable')
   , resolveInlineBlock = require('./lib/resolve-inline-block')
+  , mdToHtml           = require('./lib/md-to-html')
 
   , insertsRe = /\x01(\d+)\x01/
   , justInsertRe = /^\x01(\d+)\x01$/
 
   , isArray = Array.isArray, forEach = Array.prototype.forEach;
-
-var mdToHtml = (function () {
-	var md = new Remarkable();
-	return function (msg) { return md.render(msg).trim(); };
-}());
 
 var resolveInserts = function (str, inserts, document) {
 	var result, index = str.search(insertsRe), match, normalized;
