@@ -9,6 +9,7 @@ var forEachRight       = require('es5-ext/array/#/for-each-right')
   , htmlToDom          = require('dom-ext/html-document/#/html-to-dom')
   , resolveInlineBlock = require('./lib/resolve-inline-block')
   , mdToHtml           = require('./lib/md-to-html')
+  , normalizeLinks     = require('./lib/normalize-links')
 
   , insertsRe = /\x01(\d+)\x01/
   , justInsertRe = /^\x01(\d+)\x01$/
@@ -37,7 +38,7 @@ var fixInserts = function (dom, inserts, document) {
 	if (isText(dom)) return resolveInserts(dom.data, inserts, document) || dom;
 	if (isElement(dom)) {
 		forEach.call(dom.attributes, function (attr) {
-			var match = justInsertRe.match(attr), insert;
+			var match = attr.value.match(justInsertRe), insert;
 			if (match) {
 				insert = inserts[match[1]];
 				if (typeof insert.toDOMAttr === 'function') {
@@ -77,6 +78,7 @@ module.exports = function (document) {
 		}
 		dom = htmlToDom.call(document, mdToHtml(message));
 		if (options.inline) dom = resolveInlineBlock(dom, document);
+		normalizeLinks(dom);
 		if (!insertsMap) return dom;
 		return fixInserts(dom, insertsMap, document);
 	};

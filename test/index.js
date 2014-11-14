@@ -29,7 +29,7 @@ module.exports = function (t, a) {
 	a(result.childNodes[2].data, ' zagalo');
 
 	a.h1("Mixed with variables");
-	result = md(_('marko __marek ${ miszel } zegarek__ zagalo ${ fuszka }', {
+	result = md(_('marko __marek ${ miszel }[ zegarek](elo.pdf)__ zagalo ${ fuszka }', {
 		miszel: 'fura',
 		fuszka: {
 			toDOM: function (document) {
@@ -46,7 +46,10 @@ module.exports = function (t, a) {
 	a(result.childNodes[1].childNodes.length, 3);
 	a(result.childNodes[1].childNodes[0].data, 'marek ');
 	a(result.childNodes[1].childNodes[1].data, 'fura');
-	a(result.childNodes[1].childNodes[2].data, ' zegarek');
+	a(result.childNodes[1].childNodes[2].nodeName, 'A');
+	a(result.childNodes[1].childNodes[2].childNodes.length, 1);
+	a(result.childNodes[1].childNodes[2].getAttribute('target'), '_blank');
+	a(result.childNodes[1].childNodes[2].firstChild.data, ' zegarek');
 	a(result.childNodes[2].data, ' zagalo ');
 	a(result.childNodes[3].nodeName, 'P');
 	a(result.childNodes[3].childNodes.length, 1);
