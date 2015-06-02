@@ -14,13 +14,14 @@
     "url": "git://github.com/medikoo/i18n2-md-to-dom.git"
   },
   "dependencies": {
-    "es5-ext": "~0.10.4",
-    "dom-ext": "git://github.com/medikoo/dom-ext.git",
+    "es5-ext": "^0.10.7",
+    "dom-ext": "git://github.com/medikoo/dom-ext.git#6d8939397",
+    "html-template-to-dom": "git://github.com/medikoo/html-template-to-dom.git#c2fb7be4f",
     "remarkable": "~1.4"
   },
   "devDependencies": {
     "i18n2": "git://github.com/medikoo/i18n2.git",
-    "jsdom": "~1.2",
+    "jsdom": "^3.1.2",
     "xlint": "~0.2.1",
     "xlint-jslint-medikoo": "~0.1.2",
     "tad": "0.2"
