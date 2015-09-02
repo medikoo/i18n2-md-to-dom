@@ -11,7 +11,7 @@ Converts [i18n2](https://github.com/medikoo/i18n2#i18n2) message, supposedly wri
 
 ```javascript
 var _ = require('i18n2')(locale);
-var md2dom = require('i18n2-md-to-dom');
+var md2Dom = require('i18n2-md-to-dom');
 
 var dom = md2Dom(_("Some text with __important__ content."));
 // dom reflects: <p>Some text with <strong>important</strong> content.</p>
@@ -31,7 +31,7 @@ It's helpful when we want to resolve texts for simple one line messages and be s
 
 ```javascript
 var _ = require('i18n2')(locale);
-var md2dom = require('i18n2-md-to-dom');
+var md2Dom = require('i18n2-md-to-dom');
 
 var dom = md2Dom(_("Some text with __important__ content."), { inline: true });
 // dom reflects document fragment that contains:
