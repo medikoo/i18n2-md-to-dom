@@ -18,7 +18,7 @@ module.exports = function (document) {
 				normalizeHtml: mdToHtml,
 				normalizeDom: function (dom) {
 					if (options.inline) dom = resolveInlineBlock(dom, document);
-					normalizeLinks(dom);
+					if (dom && dom.childNodes) normalizeLinks(dom);
 					return dom;
 				}
 			});
