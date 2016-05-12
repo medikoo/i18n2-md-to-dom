@@ -16,7 +16,7 @@ module.exports = function (document) {
 		if (isArray(message)) {
 			return tokensToDom(document, message, {
 				normalizeHtml: mdToHtml,
-				normalizeDom: function (dom) {
+				normalizeDomAfterInserts: function (dom) {
 					if (options.inline) dom = resolveInlineBlock(dom, document);
 					if (dom && dom.childNodes) normalizeLinks(dom);
 					return dom;
