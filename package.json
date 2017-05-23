@@ -1,6 +1,6 @@
 {
   "name": "i18n2-md-to-dom",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Markdown resolver for 18n2 messages",
   "author": "Mariusz Nowak <medyk@medikoo.com>",
   "keywords": [
