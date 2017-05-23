@@ -14,17 +14,17 @@
     "url": "git://github.com/medikoo/i18n2-md-to-dom.git"
   },
   "dependencies": {
-    "es5-ext": "^0.10.7",
-    "dom-ext": "git://github.com/medikoo/dom-ext.git#e064f7c1a58437af03ff981d6b0aa9d0a974644c",
-    "html-template-to-dom": "git://github.com/medikoo/html-template-to-dom.git#85177d3af832b06",
-    "remarkable": "~1.4"
+    "es5-ext": "^0.10.21",
+    "dom-ext": "^0.1.2",
+    "html-template-to-dom": "2",
+    "markdown-it": "^8.3.1"
   },
   "devDependencies": {
-    "i18n2": "git://github.com/medikoo/i18n2.git",
-    "jsdom": "9",
-    "xlint": "^0.2.1",
-    "xlint-jslint-medikoo": "^0.1.3",
-    "tad": "^0.2.2"
+    "i18n2": "0.1",
+    "jsdom": "11",
+    "tad": "^0.2.4",
+    "xlint": "^0.2.2",
+    "xlint-jslint-medikoo": "^0.1.4"
   },
   "scripts": {
     "lint": "node node_modules/xlint/bin/xlint --linter=node_modules/xlint-jslint-medikoo/index.js --no-cache --no-stream",
