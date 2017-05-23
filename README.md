@@ -2,7 +2,7 @@
 
 ### Installation
 
-	$ npm install medikoo/i18n2-md-to-dom
+	$ npm install i18n2-md-to-dom
 
 ### Usage
 
